@@ -3,13 +3,24 @@ using BinaryBuilder
 name = "CDDLib"
 version = v"0.94h"
 
-src_tarball = "https://github.com/saschatimme/cddlib/archive/v0.94h.tar.gz"
-src_hash    = "d0d154f1cf94c53da2efd835b51b608a5a5bccf825d5571122e0d9eda1505815"
 sources = [
-    src_tarball => src_hash
+    "https://github.com/saschatimme/cddlib/archive/v0.94h.tar.gz" =>
+    "c14181fe20562d09f09a5ec010d0ae6323e0ff18fa539f671777163a385b1b9a",
+    "https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2" =>
+    "5275bb04f4863a13516b2f39392ac5e272f5e1bb8057b18aec1c9b79d73d8fb2"
 ]
 
 script = raw"""
+echo $prefix
+cd $WORKSPACE/srcdir/gmp-*/
+mkdir -p $WORKSPACE/tmpdir
+./configure --prefix=$WORKSPACE/tmpdir/gmp --host=${target}
+make
+make install
+
+cd $WORKSPACE/srcdir/cddlib-*/
+
+./configure --prefix=${prefix} --host=${target} CFLAGS="-I$WORKSPACE/tmpdir/gmp/include -L$WORKSPACE/tmpdir/gmp/lib"
 make
 make install
 """
@@ -35,7 +46,8 @@ dependencies = []
 # Build 'em!
 build_tarballs(
     ARGS,
-    "libfoo",
+    name,
+    version,
     sources,
     script,
     platforms,

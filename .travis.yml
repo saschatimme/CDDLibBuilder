@@ -1,9 +1,8 @@
-
 language: julia
 os:
-  - linux
+- linux
 julia:
-  - 0.6
+- 0.6
 notifications:
   email: false
 git:
@@ -11,30 +10,25 @@ git:
 cache:
   timeout: 1000
   directories:
-    - downloads
+  - downloads
 env:
   global:
-    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-    - BINARYBUILDER_AUTOMATIC_APPLE=true
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_AUTOMATIC_APPLE=true
 sudo: required
-
-# Before anything else, get the latest versions of things
 before_script:
-  - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryProvider.jl")'
-  - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
-
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryProvider.jl")'
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
 script:
-  - julia build_tarballs.jl
+- julia --color=yes build_tarballs.jl
 
 deploy:
-    provider: releases
-    api_key:
-        # Note; this api_key is only valid for JuliaDiffEq/SundialsBuilder; you need
-        # to make your own: https://docs.travis-ci.com/user/deployment/releases/
-        # secure: Lor5OaMSvxagIdkH3ybwv/rjTgMDrlWAOG2wRL3B/T2llpImoGrOC+gLcuguqdR2dfqt9nmhsCi2x1LY0YPHZUJT4t6NiCNAxz3Y+/n1Rbdri8/iOvgWzYoiw2Ta3d7zg1gx77iTW7XqNzdDPr5nMmOgzlvDTOT0Ov6MYdQrURWBn5G6XnLoTmMRlkSNpBCkdrqY/ZIdTlaHRIgBUfgyzwzPSftyr+3eLLDX9OZ/wRz9sRu16KB474+xJ+Lg+aZ1zoOmljHiMohIpwhSEeWRiVIFMMx3y9gLkPfTQJsnnc3UkF7ofNeTGMKWOVaPq6jnA/X/tBX/IRfWXzd+iDpwn8tWE5h/KT4ebWPTdXfXDgUJtNdOfMZEO1cykuzfuNfynZ2QecpblsPJi9MfiwDcOFOvVrnLOn6oshjCVZptJs77RO3ciIpx4+LTVwPHyKYMp+iB+4BAos1N3UR9Lvp5CZo1kwuPzGQojWQsBTjeCKjhAjN5cC6ajcnlAxGtEAdPqDrboPmPkUkA+aZgGDmcWCMCgCi2rf3zRbhokibWRiBnDcXjx7NZfpOdXrPTVmwNU7A0vlF8k636TyeSysbFlGJHSCACiMI9hlh8JpqM7uuf1JGJP4in6Y53MQYgwRTK1+UB1SRFRsYsDHbenb5FRnRtOyxCu4g912VbVue3mew=
-    file_glob: true
-    file: products/*
-    skip_cleanup: true
-    on:
-        repo: JuliaDiffEq/SundialsBuilder
-        tags: true
+  provider: releases
+  api_key:
+    secure: JZYiG0xSrT/Wkh4yokkz92dFkV6Aq857wqisKu+qytMJoZcepFe2XsW8N3YIEg0fTnNUwiFYXtUUzTU83r5ppIhPeY1iqOTrGOFfzjmJh8NMVet0re2SSVChqc/T7VdO89+gNONz6ByuOECIk5lbcHAaWWZTDcpg9ILlrv4ffTKSZ1IhflVfEuu0+UKrHUJvV9PYoNZ/DPDisHvlMm+ZDg564EFsR7sqC8cAHW2/fTUwxYIVboks89kQhT4WeVV4VxyokbX7OfLpBp+1zXC8ZI5Dq958Bw9uiirQgIkfr2MnOExHe/uNDzdcTC5IOsjVTwR9+Nr3nFYjlP9XBH71XlZtTdyKC1htUSQLuHrxUEckVZWtI9lXM2i1V8c9PTSam5A2hw+IzGEH3L+OCNR6/O1P6KHAM51HDhnRjj1hbSx74TH/+xsYGWckxJ0Tqhkwe4NZhGVKg/K7emAf4+1WD51BKVCPR/quCepJPvw7P6gU2/6qY7UoDykVQZdi54E0lzS5bs1/pzDjALHCzxW1dlp/Zswq9sJL+YZ8pWsLoT8JDvew292L1E2aqTzZAmvrD48KyhFuWiNWRSsah0DfiwxOTnmHYhchAXO5VphnNKapWDpAjYNMEn9YTgRghCcUmfhW9u2hRvoX7D7XC9Sc5SdjaDnZL4M+iWbrLu3ztWI=
+  file: products/*
+  skip_cleanup: true
+  file_glob: true
+  on:
+    repo: saschatimme/CDDLibBuilder
+    tags: true
