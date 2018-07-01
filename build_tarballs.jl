@@ -11,7 +11,7 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir/cddlib-*/
 
-./configure --prefix=${prefix} --host=${target}
+./configure --prefix=${prefix} --host=${target} CFLAGS="-lgmp"
 make
 make install
 """
