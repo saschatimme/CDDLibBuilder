@@ -26,8 +26,8 @@ make install
 """
 
 platforms = [
-    BinaryProvider.Windows(:i686),
-    BinaryProvider.Windows(:x86_64),
+    # BinaryProvider.Windows(:i686),
+    # BinaryProvider.Windows(:x86_64),
     BinaryProvider.Linux(:i686, :glibc),
     BinaryProvider.Linux(:x86_64, :glibc),
     BinaryProvider.Linux(:aarch64, :glibc),
