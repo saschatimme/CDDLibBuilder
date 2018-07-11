@@ -11,8 +11,8 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir/cddlib-*/
 
-./configure --prefix=${prefix} --host=${target} CFLAGS="-lgmp"
-make
+./configure LDFLAGS=-L$prefix/lib CFLAGS=-I$prefix/include --prefix=${prefix} --host=${target}
+make -j${nproc}
 make install
 """
 
@@ -29,7 +29,7 @@ platforms = [
 ]
 
 products(prefix) = [
-    LibraryProduct(prefix, "cddlib", :cddlib)
+    LibraryProduct(prefix, "libcddlib", :libcddlib)
 ]
 
 dependencies = [
